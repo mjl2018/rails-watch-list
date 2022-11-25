@@ -11,7 +11,14 @@ class ListsController < ApplicationController
   end
 
   def create
-    @List
+    @list = List.new(list_params)
+    @team = Team.find(params[:team_id])
+    @list.team = @team
+     if @list.save
+    redirect_to team_path(@team)
+      else
+        render 'teams/show', status: :unprocessable_entity
+      end
   end
 
 
